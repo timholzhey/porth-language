@@ -1,0 +1,96 @@
+{
+	"name": "Porth",
+	"fileTypes": [
+		"porth"
+	],
+	"scopeName": "source.porth",
+	
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#constants-and-special-vars"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.porth",
+					"match": "\\b(if|else|end|while|do|macro)\\b"
+				},
+				{
+					"name": "keyword.declaration.porth",
+					"match": "\\b(include)\\b"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.porth",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.porth",
+							"match": "\\\\."
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.porth",
+					"begin": "'",
+					"end": "'",
+					"patterns": [
+						{
+							"name": "constant.character.escape.porth",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.line.double-slash.porth",
+			"begin": "//",
+			"end": "\n"
+		},
+		"functions": {
+			"patterns": [{
+				"name": "variable.name.source.porth",
+				"match": "(\\+|\\-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|bor|band|dup|swap|drop|over|mem|\\.|,|\\.64|,64|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)"
+			}]
+		},
+		"constants-and-special-vars": {
+			"patterns": [
+				{
+					"name": "constant.numeric.porth",
+					"match": "(?<!\\$)\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b(?!\\$)"
+				},
+				{
+					"name": "support.class.porth",
+					"match": "\\b(porth)\\b"
+				},
+				{
+					"name": "invalid.illegal",
+					"match": ";"
+				},
+				{
+					"name": "entity.name.function.dart",
+					"match": "(\\S*)[\\s]?"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,25 @@
+{
+    "name": "porth-language",
+    "displayName": "Porth Language",
+    "description": "Porth language support for Visual Studio Code.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "porth",
+            "aliases": ["Porth", "porth"],
+            "extensions": [".porth"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "porth",
+            "scopeName": "source.porth",
+            "path": "./syntaxes/porth.tmLanguage.json"
+        }]
+    }
+}
