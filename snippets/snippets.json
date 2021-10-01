@@ -339,5 +339,15 @@
             "\t👉 syscall stack[0](scnum)"
         ],
         "scope": "source.porth"
+    },
+    "if divisible": {
+        "prefix": ["ifdiv", "ifmod"],
+        "body": [
+            "dup ${1:_divisor_} % 0 = if",
+            "\t${2:_body_}",
+            "end"
+        ],
+        "description": "Branch if value is divisible by a number",
+        "scope": "source.porth"
     }
 }
