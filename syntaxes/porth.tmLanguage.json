@@ -10,6 +10,9 @@
 			"include": "#keywords"
 		},
 		{
+			"include": "#macros"
+		},
+		{
 			"include": "#placeholders"
 		},
 		{
@@ -35,6 +38,14 @@
 				{
 					"name": "keyword.declaration.porth",
 					"match": "\\b(include)\\b"
+				}
+			]
+		},
+		"macros": {
+			"patterns": [
+				{
+					"name": "support.class.porth",
+					"match": "(?<=macro\\s+)(\\S*)"
 				}
 			]
 		},
@@ -81,7 +92,7 @@
 			"patterns": [
 				{
 				"name": "variable.name.source.porth",
-				"match": "(\\+|\\-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|bor|band|dup|swap|drop|over|mem|\\.|,|\\.64|,64|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)"
+				"match": "\\b(\\+|\\-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|bor|band|dup|swap|drop|over|mem|\\.|,|\\.64|,64|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)\\b"
 				}
 			]
 		},
@@ -89,11 +100,7 @@
 			"patterns": [
 				{
 					"name": "constant.numeric.porth",
-					"match": "(?<!\\$)\\s((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b(?!\\$)"
-				},
-				{
-					"name": "support.class.porth",
-					"match": "\\b(porth)\\b"
+					"match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b(?!\\$)"
 				},
 				{
 					"name": "invalid.illegal",
