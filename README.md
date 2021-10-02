@@ -1,6 +1,6 @@
 # Porth language for VSCode
 
-GitHub repository: [Porth language for VSCode](https://github.com/timholzhey/porth-language)
+GitHub repository: [Porth language extension for VSCode](https://github.com/timholzhey/porth-language)
 
 ## Features
 
@@ -19,6 +19,7 @@ Future features:
 - Dynamic language includes
 - Extended standard libraries
 
+Porth is a work-in-progress, imperative, stackbased programming language similar to Forth.
 The open-source language was created by [Alexey Kutepov](https://github.com/rexim).
 
 Language GitHub repository: [Porth](https://github.com/tsoding/porth)
