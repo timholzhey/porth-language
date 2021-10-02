@@ -1,39 +1,39 @@
 {
-    "name": "porth-language",
-    "displayName": "Porth Language",
-    "description": "Porth language support for Visual Studio Code.",
-    "version": "0.0.1",
-    "publisher": "TimHolzhey",
-    "engines": {
-        "vscode": "^1.60.0"
-    },
-    "homepage": "https://github.com/timholzhey/porth-language",
+	"name": "porth-language",
+	"displayName": "Porth Language",
+	"description": "Porth language support for Visual Studio Code.",
+	"version": "0.0.1",
+	"publisher": "TimHolzhey",
+	"engines": {
+		"vscode": "^1.60.0"
+	},
+	"homepage": "https://github.com/timholzhey/porth-language",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/timholzhey/porth-language.git"
 	},
-    "categories": [
-        "Programming Languages",
-        "Snippets",
+	"categories": [
+		"Programming Languages",
+		"Snippets",
 		"Formatters"
-    ],
-    "keywords": [
-        "porth",
-        "language",
-        "stack",
-        "python",
-        "compiler"
-    ],
-    "bugs": "https://github.com/timholzhey/porth-language/issues",
-    "license": "SEE LICENSE IN LICENSE.txt",
-    "activationEvents": [
+	],
+	"keywords": [
+		"porth",
+		"language",
+		"stack",
+		"python",
+		"compiler"
+	],
+	"bugs": "https://github.com/timholzhey/porth-language/issues",
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"activationEvents": [
 		"onCommand:porth.simulate",
 		"onCommand:porth.compile",
-        "onCommand:porth.OpenExtensionDocumentation"
+		"onCommand:porth.OpenExtensionDocumentation"
 	],
 	"main": "./out/extension",
-    "contributes": {
-        "commands": [
+	"contributes": {
+		"commands": [
 			{
 				"command": "porth.simulate",
 				"title": "Porth: Simulate program"
@@ -42,28 +42,42 @@
 				"command": "porth.compile",
 				"title": "Porth: Compile program"
 			},
-            {
+			{
 				"command": "porth.OpenExtensionDocumentation",
 				"title": "Porth: Open Extension Documentation"
 			}
 		],
-        "languages": [{
-            "id": "porth",
-            "aliases": ["Porth", "porth"],
-            "extensions": [".porth"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "porth",
-            "scopeName": "source.porth",
-            "path": "./syntaxes/porth.tmLanguage.json"
-        }],
-        "snippets": [
+		"languages": [
+			{
+				"id": "porth",
+				"aliases": [
+					"Porth",
+					"porth"
+				],
+				"extensions": [
+					".porth"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "porth",
+				"scopeName": "source.porth",
+				"path": "./syntaxes/porth.tmLanguage.json"
+			}
+		],
+		"snippets": [
 			{
 				"language": "porth",
 				"path": "./snippets/snippets.json"
 			}
 		]
-    },
-    "icon": "icon.png"
+	},
+	"icon": "icon.png",
+	"__metadata": {
+		"id": "95b19fba-a66c-48de-9177-8c2d62fe2f14",
+		"publisherDisplayName": "Tim Holzhey",
+		"publisherId": "308b5072-30b7-44f6-b1f9-ddc67a740cef"
+	}
 }
