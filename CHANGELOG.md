@@ -10,3 +10,10 @@
 
 - Added macro declaration name highlighting
 - fixed small syntax highlighting bugs
+
+## [0.0.3]
+
+- Added compile, run and test command
+- Added debug flag, auto-run flag and porth path settings
+- Implemented compile and auto-run command
+- Added compile and run support and documentation for Windows with WSL
