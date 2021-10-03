@@ -6,18 +6,37 @@ GitHub repository: [Porth language extension for VSCode](https://github.com/timh
 
 This is a Visual Studio Code extension created by Tim Holzhey to add Porth language support.
 
-Porth is a work-in-progress, imperative, stackbased programming language similar to Forth.
-The open-source language was created by [Alexey Kutepov](https://github.com/rexim).
+Porth is an imperative, stackbased programming language similar to Forth.
+The open-source language was created is currently devloped by [Alexey Kutepov GitHub](https://github.com/rexim) aka [Tsoding](https://www.youtube.com/c/Tsoding).
 
 Features:
-- Syntax highlighting
-- Code snippets
+- Syntax highlighting (Grammar set)
+- Code snippets (Intinsics and useful code blocks)
+- Simulate, compile and run commands
+- Integrated Porth compiler (submodule)
+
+## Usage
+
+1. Open a `.porth` file inside some folder or workspace.
+2. Open the Command Pallet (`CTRL+SHIFT+P` for Windows/Linux or `CMD+SHIFT+P` on Mac) and enter one of the supported commands:
+    - Porth: Simulate program
+    - Porth: Compile program
+    - Porth: Run program
+    - Porth: Test proram
+
+Make shure you have all required software (Python, nasm, ld) added to `$PATH`.
+
+## Settings
+
+- `porth.path`: Path to the porth compiler and standard libraries (default: integrated)
+- `porth.debug`: Compiler debug flag (default: off)
+- `porth.auto-run`: Auto run the program after compiling (default: on)
 
 ## Work in progress
 
 Future features:
 
-- Simulate, compile and run commands
+- Run, test and type check program
 - Semantic error checking
 - Dynamic language includes
 - Extended standard libraries
@@ -26,6 +45,18 @@ Language GitHub repository: [Porth language](https://github.com/tsoding/porth)
 
 ## Requirements
 
-- Unix x86 architectures for compiling (Linux)
+### Simulation only (all platforms):
+
 - Python
-- Netwide Assembler (NASM) x86
+
+### Unix x86 compiling
+
+- Python
+- Netwide Assembler ([NASM](https://www.nasm.us)) x86
+- GNU linker
+
+### Windows 10 x86 compiling
+
+- Install the Windows Subsystem for Linux (WSL) with: `wsl --install` to use the integrated GNU linker
+- Download and install the latest version of [NASM](https://www.nasm.us) for `win64`
+- Add NASM to `$PATH` (default: `C:\Users\%user%\AppData\Local\bin\NASM`) and restart
