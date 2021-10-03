@@ -2,7 +2,7 @@
 	"name": "porth-language",
 	"displayName": "Porth Language",
 	"description": "Porth language support for Visual Studio Code.",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"publisher": "TimHolzhey",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -29,6 +29,8 @@
 	"activationEvents": [
 		"onCommand:porth.simulate",
 		"onCommand:porth.compile",
+		"onCommand:porth.run",
+		"onCommand:porth.test",
 		"onCommand:porth.OpenExtensionDocumentation"
 	],
 	"main": "./out/extension",
@@ -41,6 +43,14 @@
 			{
 				"command": "porth.compile",
 				"title": "Porth: Compile program"
+			},
+			{
+				"command": "porth.run",
+				"title": "Porth: Run program"
+			},
+			{
+				"command": "porth.test",
+				"title": "Porth: Test program"
 			},
 			{
 				"command": "porth.OpenExtensionDocumentation",
@@ -72,7 +82,28 @@
 				"language": "porth",
 				"path": "./snippets/snippets.json"
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Porth",
+			"properties": {
+				"porth.path": {
+					"type": "string",
+					"default": "_builtin_",
+					"description": "Path to Porth. Leave default if you want to use the built-in porth compiler."
+				},
+				"porth.debug": {
+					"type": "boolean",
+					"default": false,
+					"description": "Use porth with debug flag."
+				},
+				"porth.auto-run": {
+					"type": "boolean",
+					"default": true,
+					"description": "Automatically run the program after compiling."
+				}
+			}
+		}
 	},
 	"icon": "icon.png",
 	"__metadata": {
