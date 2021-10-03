@@ -24,7 +24,7 @@ Features:
     - Porth: Run program
     - Porth: Test proram
 
-Make shure you have all required software (Python, nasm, ld) added to `$PATH`.
+Make shure you have all required commands (python3, nasm, ld) added to `$PATH`.
 
 ## Settings
 
@@ -36,7 +36,7 @@ Make shure you have all required software (Python, nasm, ld) added to `$PATH`.
 
 Future features:
 
-- Run, test and type check program
+- Test and type check program
 - Semantic error checking
 - Dynamic language includes
 - Extended standard libraries
@@ -47,16 +47,17 @@ Language GitHub repository: [Porth language](https://github.com/tsoding/porth)
 
 ### Simulation only (all platforms):
 
-- Python
+- Python 3
 
 ### Unix x86 compiling
 
-- Python
+- Python 3
 - Netwide Assembler ([NASM](https://www.nasm.us)) x86
 - GNU linker
 
 ### Windows 10 x86 compiling
 
+- Python 3
 - Install the Windows Subsystem for Linux (WSL) with: `wsl --install` to use the integrated GNU linker
 - Download and install the latest version of [NASM](https://www.nasm.us) for `win64`
 - Add NASM to `$PATH` (default: `C:\Users\%user%\AppData\Local\bin\NASM`) and restart

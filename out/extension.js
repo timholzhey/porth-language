@@ -7,6 +7,7 @@ const path = require("path");
 const child_process = require("child_process");
 const search = require("./search");
 const extension_config = vscode.workspace.getConfiguration(this.id);
+const isWin = process.platform === "win32";
 
 function activate(context) {
     console.log('Porth language extension is now active!');
@@ -21,13 +22,14 @@ function activate(context) {
     const action_strings = {
         sim: 'Simulating',
         com: 'Compiling',
-        run: 'Running',
+        run: 'Running compiled',
         test: 'Testing',
     }
 
-    let executePorth = (action) => {
-        if (action == actions.TEST || action == actions.RUN) {
-            vscode.window.showInformationMessage("[Porth]: Not implemented yet :(");
+    let prepareCommand = (action) => {
+        console.log(`Preparing command with action [${action}]...`);
+        if (action == actions.TEST) {
+            vscode.window.showErrorMessage("[Porth]: Not implemented yet :(");
             return;
         }
 
@@ -44,82 +46,80 @@ function activate(context) {
         }
 
         if (open_file_name == "" || open_file_path == "") {
-            vscode.window.showInformationMessage("[Porth]: Please open a .porth file");
+            vscode.window.showErrorMessage("[Porth]: Please open a .porth file");
+            console.log("Couldn't select a visible editor containing a .porth file");
             return;
+        } else {
+            console.log(`Selected .porth file path: ${open_file_path} with file name: ${open_file_name}`);
         }
 
-        const cmd = `python`;
-        const flag_autorun = extension_config.get('porth.auto-run');
-        const flag_debug = extension_config.get('porth.debug');
+        let flag_autorun = extension_config.get('porth.auto-run');
+        let flag_debug = extension_config.get('porth.debug');
+        console.log(`Using global extension settings: [Autorun: ${flag_autorun}, Debug: ${flag_debug}]`);
 
-        let args = [`${path.join(porth_path, "/porth.py")}`, `-I`, `${porth_path}\\std`];
-        if (flag_debug) args.push("-debug");
-        args.push(`${action}`);
-        if (flag_autorun && action == actions.COMPILE) args.push("-r");
-        args.push(`${open_file_path}`);
-
-        if (action == actions.COMPILE) {
-            vscode.window.showWorkspaceFolderPick().then((root) => {
-                if (root === undefined) {
-                    console.log("No workspace folder was detected. Not going to specify an output directory");
-                }
-                else {
-                    let outputPath = root.uri.fsPath + "/out";
-                    fs.stat(outputPath, (err, stats) => {
-                        if (err && err.code === 'ENOENT') {
-                            // output folder does not exist
-                            try {
-                                fs.mkdirSync(outputPath);
-                            }
-                            catch (e) {
-                                if (e.code !== 'EEXIST') {
-                                    throw e;
-                                }
-                            }
-                        }
-                        else if (err) {
-                            vscode.window.showErrorMessage('[Porth]: Error while checking if /out folder exists: ' + err);
-                            return;
-                        }
-                    });
-                    args.push("-o", outputPath);
-                }
-            });
-        }
-        
-        let output = vscode.window.createOutputChannel("Porth");
-        output.show();
-
-        output.appendLine(`[Porth]: ${action_strings[action]} ${open_file_name} ...`);
-        output.appendLine(`[Running]: ${cmd} ${args.join(" ")}`);
-        var child = child_process.spawn(cmd, args);
-        var scriptOutput = "";
-
-        child.stdout.setEncoding('utf8');
-        child.stdout.on('data', function(data) {
-            output.append(data);
-
-            data=data.toString();
-            scriptOutput+=data;
-        });
-
-        child.stderr.setEncoding('utf8');
-        child.stderr.on('data', function(data) {
-            output.appendLine('stderr: ' + data);
-
-            data=data.toString();
-            scriptOutput+=data;
-        });
-
-        child.on('close', function(code) {
-            output.appendLine('[Porth]: Exited with code: ' + code);
-        });
+        buildCommand(action, porth_path, open_file_path, open_file_name, flag_autorun, flag_debug);
     };
 
-    let simulate = vscode.commands.registerCommand('porth.simulate', () => {executePorth(actions.SIMULATE)});
-    let compile = vscode.commands.registerCommand('porth.compile', () => {executePorth(actions.COMPILE)});
-    let run = vscode.commands.registerCommand('porth.run', () => {executePorth(actions.RUN)});
-    let test = vscode.commands.registerCommand('porth.test', () => {executePorth(actions.TEST)});
+    let buildCommand = (action, porth_path, open_file_path, open_file_name, flag_autorun, flag_debug) => {
+        console.log("Building command...");
+        let cmd = "";
+        let args = [];
+        switch (action) {
+            case actions.SIMULATE:
+            case actions.COMPILE:
+                cmd = `python3`;
+                args = [`${path.join(porth_path, "/porth.py")}`, `-I`, `${porth_path}/std`];
+                if (flag_debug) args.push("-debug");
+                args.push(`${action}`);
+                if (flag_autorun && action == actions.COMPILE) args.push("-r");
+                args.push(`${open_file_path}`);
+                return executeCommand(cmd, args, action, open_file_name);
+            case actions.RUN:
+                let basepath = open_file_path.split(".porth")[0];
+                fs.stat(basepath, (err, stats) => {
+                    if (err && err.code === 'ENOENT') {
+                        console.log(`${basepath} does not exist.`);
+                        vscode.window.showErrorMessage("[Porth]: Executable not found. Compile before running.");
+                        return executeCommand(cmd, args, action, open_file_name);
+                    }
+                    else if (err) {
+                        vscode.window.showErrorMessage('[Porth]: Error while checking if output file exists: ' + err);
+                        return;
+                    } else {
+                        if (isWin) {
+                            cmd = `wsl`;
+                            args = [`${basepath.replace(/\\/g, '/').replace(/(^)/, '/mnt/$1').replace(':', '')}`];
+                        } else {
+                            cmd = `${basepath}`;
+                            args = [];
+                        }
+                        console.log(`Selected ${basepath} as the executable to run.`);
+                        return executeCommand(cmd, args, action, open_file_name);
+                    }
+                });
+        }
+    };
+
+    let executeCommand = (cmd, args, action, open_file_name) => {
+        console.log(`Executing command [${cmd}] with args [${args}]...`);
+        if (cmd == "") return;
+        if (vscode.window.activeTerminal != undefined && vscode.window.activeTerminal.name == "Porth") {
+            vscode.window.activeTerminal.dispose();
+        }
+        let terminal = vscode.window.createTerminal("Porth");
+
+        terminal.show();
+
+        console.log(`[Running]: ${cmd} ${args.join(" ")}`);
+
+        let time_before = Date.now();
+        terminal.sendText(cmd + " " + args.join(" "));
+    };
+
+    let simulate = vscode.commands.registerCommand('porth.simulate', () => {prepareCommand(actions.SIMULATE)});
+    let compile = vscode.commands.registerCommand('porth.compile', () => {prepareCommand(actions.COMPILE)});
+    let run = vscode.commands.registerCommand('porth.run', () => {prepareCommand(actions.RUN)});
+    let test = vscode.commands.registerCommand('porth.test', () => {prepareCommand(actions.TEST)});
 
     context.subscriptions.push(simulate);
     context.subscriptions.push(compile);

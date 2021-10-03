@@ -17,3 +17,9 @@
 - Added debug flag, auto-run flag and porth path settings
 - Implemented compile and auto-run command
 - Added compile and run support and documentation for Windows with WSL
+
+## [0.0.4]
+
+- Implemented run command
+- Changed execution from OUTPUT to TERMINAL in order to support user input
+- Fixed os specific file paths

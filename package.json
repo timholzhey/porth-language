@@ -2,7 +2,7 @@
 	"name": "porth-language",
 	"displayName": "Porth Language",
 	"description": "Porth language support for Visual Studio Code.",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "TimHolzhey",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -25,7 +25,7 @@
 		"compiler"
 	],
 	"bugs": "https://github.com/timholzhey/porth-language/issues",
-	"license": "SEE LICENSE IN LICENSE.txt",
+	"license": "MIT",
 	"activationEvents": [
 		"onCommand:porth.simulate",
 		"onCommand:porth.compile",
