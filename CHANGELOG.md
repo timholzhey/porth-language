@@ -23,3 +23,7 @@
 - Implemented run command
 - Changed execution from OUTPUT to TERMINAL in order to support user input
 - Fixed os specific file paths
+
+## [0.0.5]
+
+- Fixed typos in README
