@@ -91,8 +91,12 @@
 		"functions": {
 			"patterns": [
 				{
-				"name": "variable.name.source.porth",
-				"match": "\\b(\\+|\\-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|bor|band|dup|swap|drop|over|mem|\\.|,|\\.64|,64|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)\\b"
+					"name": "variable.name.source.porth",
+					"match": "\\b(divmod|print|shr|shl|bor|band|dup|swap|drop|over|mem|argc|argv|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)\\b"
+				},
+				{
+					"name": "variable.name.source.porth",
+					"match": "(?<=^|\\s)(cast\\(ptr\\)|\\+|\\-|\\*|=|<|>=|<=|!=|\\-|,|\\.64|,64)(?=>$|\\s)"
 				}
 			]
 		},

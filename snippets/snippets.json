@@ -349,5 +349,23 @@
         ],
         "description": "Branch if value is divisible by a number",
         "scope": "source.porth"
+    },
+    "argc": {
+        "prefix": "argc",
+        "body": "argc",
+        "description": "Appends the number of arguments",
+        "scope": "source.porth"
+    },
+    "argv": {
+        "prefix": "argv",
+        "body": "argv",
+        "description": "Appends the pointer to the array of arguments",
+        "scope": "source.porth"
+    },
+    "cast(ptr)": {
+        "prefix": "cast(ptr)",
+        "body": "cast(ptr)",
+        "description": "Casts value to a pointer",
+        "scope": "source.porth"
     }
 }

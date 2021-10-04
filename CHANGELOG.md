@@ -27,3 +27,9 @@
 ## [0.0.5]
 
 - Fixed typos in README
+
+## [0.0.6]
+
+- Fixed intrinsics syntax highlighting
+- Added newest instrinsic language features highlighting and snippets
+- Updated porth fork
