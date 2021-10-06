@@ -31,7 +31,8 @@
 		"onCommand:porth.compile",
 		"onCommand:porth.run",
 		"onCommand:porth.test",
-		"onCommand:porth.OpenExtensionDocumentation"
+		"onCommand:porth.OpenExtensionDocumentation",
+		"onLanguage:porth"
 	],
 	"main": "./out/extension",
 	"contributes": {

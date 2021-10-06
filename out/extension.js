@@ -4,8 +4,8 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
-const child_process = require("child_process");
 const search = require("./search");
+const diagnostics = require("./diagnostics");
 const extension_config = vscode.workspace.getConfiguration(this.id);
 const isWin = process.platform === "win32";
 
@@ -17,16 +17,12 @@ function activate(context) {
         COMPILE: "com",
         RUN: "run",
         TEST: "test",
-    }
-
-    const action_strings = {
-        sim: 'Simulating',
-        com: 'Compiling',
-        run: 'Running compiled',
-        test: 'Testing',
-    }
-
+    };
+    let open_file_name, open_file_path;
+    let diagnosticsManager = new diagnostics.diagnosticsManager();
+    
     let prepareCommand = (action) => {
+        getPorthFile();
         console.log(`Preparing command with action [${action}]...`);
         if (action == actions.TEST) {
             vscode.window.showErrorMessage("[Porth]: Not implemented yet :(");
@@ -35,17 +31,8 @@ function activate(context) {
 
         let porth_path_conf = extension_config.get('porth.path');
         let porth_path = porth_path_conf != "_builtin_" ? porth_path_conf : path.join(context.extensionPath, "/porth");
-        let open_file_path = "", open_file_name = "";
 
-        for (let editor of vscode.window.visibleTextEditors) {
-            if (editor.document.uri.fsPath.split(".").pop() == "porth") {
-                open_file_path = editor.document.uri.fsPath;
-                open_file_name = open_file_path.split("\\").pop();
-                break;
-            }
-        }
-
-        if (open_file_name == "" || open_file_path == "") {
+        if (open_file_name == undefined || open_file_path == undefined) {
             vscode.window.showErrorMessage("[Porth]: Please open a .porth file");
             console.log("Couldn't select a visible editor containing a .porth file");
             return;
@@ -116,20 +103,48 @@ function activate(context) {
         terminal.sendText(cmd + " " + args.join(" "));
     };
 
+    let getPorthFile = () => {
+        let editors = [];
+        if (vscode.window.activeTextEditor != undefined) {
+            editors.push(vscode.window.activeTextEditor);
+        }
+        editors = editors.concat(vscode.window.visibleTextEditors);
+        for (let editor of editors) {
+            if (editor.document.uri.fsPath.split(".").pop() == "porth") {
+                open_file_path = editor.document.uri.fsPath;
+                open_file_name = open_file_path.split("\\").pop();
+                diagnosticsManager.setFile(editor.document.uri, editor.document.uri.fsPath);
+                diagnosticsManager.init();
+                console.log(`Update current porth file to ${open_file_path}`);
+                break;
+            }
+        }
+    }
+
     let simulate = vscode.commands.registerCommand('porth.simulate', () => {prepareCommand(actions.SIMULATE)});
     let compile = vscode.commands.registerCommand('porth.compile', () => {prepareCommand(actions.COMPILE)});
     let run = vscode.commands.registerCommand('porth.run', () => {prepareCommand(actions.RUN)});
     let test = vscode.commands.registerCommand('porth.test', () => {prepareCommand(actions.TEST)});
 
-    context.subscriptions.push(simulate);
-    context.subscriptions.push(compile);
-    context.subscriptions.push(run);
-    context.subscriptions.push(test);
-
     let open_documentation = vscode.commands.registerCommand('porth.OpenExtensionDocumentation', () => {
         search.openURL('https://github.com/timholzhey/porth-language');
     });
-    context.subscriptions.push(open_documentation);
+    
+    vscode.workspace.onDidChangeTextDocument((event) => {
+        if (event.document == undefined || event.document.uri.fsPath != open_file_path) return;
+        diagnosticsManager.onDidChangeTextDocument(event);
+    });
+    vscode.window.onDidChangeVisibleTextEditors(() => {
+        getPorthFile();
+    });
+    vscode.workspace.onDidCloseTextDocument((event) => {
+        getPorthFile();
+    });
+    vscode.workspace.onDidOpenTextDocument((event) => {
+        getPorthFile();
+    });
+
+    context.subscriptions.push(simulate, compile, run, test, open_documentation);
 }
 
 exports.activate = activate;
