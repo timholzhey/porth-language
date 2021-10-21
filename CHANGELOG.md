@@ -33,3 +33,16 @@
 - Fixed intrinsics syntax highlighting
 - Added newest instrinsic language features highlighting and snippets
 - Updated porth fork
+
+## [0.0.7]
+
+- Added newest language features: memory, proc, orelse to the grammar set, snippets and diagnostics
+- Updated porth module
+- Added simple semantic type checking rules to show errors as diagnostics
+- Improved syntax highlighting regex
+- Improved snippet descriptions
+
+## [0.0.8]
+
+- Updated porth module
+- Changed elif to orelse snippets
