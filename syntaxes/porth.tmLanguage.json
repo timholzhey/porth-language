@@ -33,7 +33,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.porth",
-					"match": "\\b(if|else|end|while|do|macro|elif|memory|proc)\\b"
+					"match": "\\b(if|else|end|while|do|macro|orelse|memory|proc)\\b"
 				},
 				{
 					"name": "keyword.declaration.porth",

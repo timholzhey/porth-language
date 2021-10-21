@@ -38,8 +38,7 @@ class diagnosticsManager {
         this.diagnosticCollection.set(this.fileURI, this.diagnostics);
     }
     updateDiagnostics = () => {
-        this.checkSemanticStatic(); // Simple semantic rules
-        this.checkSemanticDynamic();
+        this.checkSemanticStatic(); // Simple static semantic rules
     }
     setFile = (uri, path) => {
         this.fileURI = uri;
@@ -53,7 +52,7 @@ class diagnosticsManager {
         this.diagnostics.push(new vscode.Diagnostic(range, msg, vscode.DiagnosticSeverity.Error));
     }
     checkSemanticStatic = () => {
-        let invalidDefinitionNameIndex = this.fileBuffer.firstWordIndexOf("(macro|memory|proc)\\s+(if|else|end|while|do|macro|elif|memory|proc|\\+|-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)");
+        let invalidDefinitionNameIndex = this.fileBuffer.firstWordIndexOf("(macro|memory|proc)\\s+(if|else|end|while|do|macro|orelse|memory|proc|\\+|-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)");
         if (invalidDefinitionNameIndex != -1) {
             // There is an invalid block definition name
             let wordMatch = this.fileBuffer.slice(invalidDefinitionNameIndex).split(/ |\n/)[1];
@@ -80,7 +79,7 @@ class diagnosticsManager {
                 `'${wordMatch.replace(/\n/g, "")}' Missing argument: No block definition name provided.`);
         }
 
-        let unexpectedTokenInMemoryDefinitionIndex = this.fileBuffer.firstWordIndexOf("(?<=memory.*)(if|else|end|while|do|macro|elif|memory|proc|-|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6).*end(?<!.*\/\/.*)");
+        let unexpectedTokenInMemoryDefinitionIndex = this.fileBuffer.firstWordIndexOf("(?<=memory.*)(if|else|end|while|do|macro|orelse|memory|proc|-|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6).*end(?<!.*\/\/.*)");
         if (unexpectedTokenInMemoryDefinitionIndex != -1) {
             // There is a memory definition with forbidden tokens
             let wordMatch = this.fileBuffer.slice(unexpectedTokenInMemoryDefinitionIndex).split(/ |\n/)[0];
@@ -119,9 +118,6 @@ class diagnosticsManager {
                 this.assignError(this.fileBuffer.firstWordIndexOf("end"), "end".length, `'end' Unmatched leading block ending operand`);
             }
         }
-    }
-    checkSemanticDynamic = () => {
-
     }
 }
 
