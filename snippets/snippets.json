@@ -32,35 +32,49 @@
     "if": {
         "prefix": "if",
         "body": [
-            "if ${1:_condition_} do",
+            "${1:_condition_} if",
             "\t${2:_body_}",
             "end"
         ],
         "description": "Branch if-block if (stack[0] == 0)",
         "scope": "source.porth"
     },
-    "elif": {
-        "prefix": "else",
-        "body": "elif ${1:_condition_} do\n${2:_body_}",
+    "orelse": {
+        "prefix": "orelse",
+        "body": "orelse ${1:_condition_} if\n\t${2:_body_}",
         "description": "Branch else if block after if block if (stack[0] == 0)",
         "scope": "source.porth"
     },
     "else": {
         "prefix": "else",
-        "body": "else\n${1:_body_}",
+        "body": "else\n\t${1:_body_}",
         "description": "Else block after if block",
         "scope": "source.porth"
     },
     "if else": {
         "prefix": "if",
         "body": [
-            "if ${1:_condition_} do",
+            "${1:_condition_} if",
             "\t${2:_body_}",
             "else",
             "\t${3:_body_}",
             "end"
         ],
         "description": "Branch if-else-block if (stack[0] == 0)",
+        "scope": "source.porth"
+    },
+    "if orelse else": {
+        "prefix": "if",
+        "body": [
+            "${1:_condition_} if",
+            "\t${2:_body_}",
+            "orelse ${3:_condition_} if",
+            "\t${4:_body_}",
+            "else",
+            "\t${5:_body_}",
+            "end"
+        ],
+        "description": "Branch if-orelse-else-block if (stack[0] == 0)",
         "scope": "source.porth"
     },
     "while do": {
