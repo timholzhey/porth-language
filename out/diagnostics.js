@@ -93,16 +93,16 @@ class diagnosticsManager {
         let blockEndOperandsCount = (this.fileBuffer.match(/(?<=\s|^)(?<!(\/\/|").*)(end)\b/g) || []).length;
         let operands = ["if", "while", "macro", "proc", "memory"];
         if (blockStartOperandsCount > blockEndOperandsCount) {
-            // There are more block starting operands than ending operands
-            let index, op;
-            for (let i in operands) {
-                index = this.fileBuffer.lastWordIndexOf(operands[i]);
-                if (index != -1) {
-                    op = operands[i];
-                    this.assignError(index, operands[i].length, `'${operands[i]}' Unmatched block starting operand.`);
-                    break;
-                };
-            }
+            // // There are more block starting operands than ending operands
+            // let index, op;
+            // for (let i in operands) {
+            //     index = this.fileBuffer.lastWordIndexOf(operands[i]);
+            //     if (index != -1) {
+            //         op = operands[i];
+            //         this.assignError(index, operands[i].length, `'${operands[i]}' Unmatched block starting operand.`);
+            //         break;
+            //     };
+            // }
         } else if (blockStartOperandsCount < blockEndOperandsCount) {
             // There are more block ending operands than starting operands
             this.assignError(this.fileBuffer.lastWordIndexOf("end"), "end".length, "'end' Unmatched block ending operand.");
