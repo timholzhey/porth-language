@@ -53,27 +53,45 @@ class diagnosticsManager {
         this.diagnostics.push(new vscode.Diagnostic(range, msg, vscode.DiagnosticSeverity.Error));
     }
     checkSemanticStatic = () => {
-        let invalidMacroNameIndex = this.fileBuffer.firstWordIndexOf("macro\\s(if|else|do|while|end|divmod|print|shr|shl|bor|band|dup|swap|drop|over|mem|argc|argv|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6|cast\\(ptr\\)|\\+|-|\\*|=|<|>=|<=|!=|-|,|\\.64|,64)");
-        if (invalidMacroNameIndex != -1) {
-            // There is an invalid macro name
-            invalidMacroNameIndex += "macro ".length;
-            this.assignError(invalidMacroNameIndex, 
-                this.fileBuffer.slice(invalidMacroNameIndex).split(" ")[0].length, 
-                `'${this.fileBuffer.slice(invalidMacroNameIndex).split(" ")[0].replace("\n", "")}' Invalid macro name.`);
+        let invalidDefinitionNameIndex = this.fileBuffer.firstWordIndexOf("(macro|memory|proc)\\s+(if|else|end|while|do|macro|elif|memory|proc|\\+|-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)");
+        if (invalidDefinitionNameIndex != -1) {
+            // There is an invalid block definition name
+            let wordMatch = this.fileBuffer.slice(invalidDefinitionNameIndex).split(/ |\n/)[1];
+            this.assignError(invalidDefinitionNameIndex + this.fileBuffer.slice(invalidDefinitionNameIndex).split(/ |\n/)[0].length + 1, 
+                wordMatch.length, 
+                `'${wordMatch.replace(/\n/g, "")}' Unexpected Token: Invalid block definition name, word is a reserved language feature.`);
         }
 
-        let missingMacroBodyIndex = this.fileBuffer.firstWordIndexOf("macro\\s(\\S*)\\send");
-        if (missingMacroBodyIndex != -1) {
-            // There is a macro with an empty body
-            missingMacroBodyIndex += "macro ".length;
-            this.assignError(missingMacroBodyIndex, 
-                this.fileBuffer.slice(missingMacroBodyIndex).split(" ")[0].length, 
-                `'${this.fileBuffer.slice(missingMacroBodyIndex).split(" ")[0].replace("\n", "")}' Empty macro body.`);
+        let missingMemoryBytesIndex = this.fileBuffer.firstWordIndexOf("memory\\s*(\\S*)\\s*end");
+        if (missingMemoryBytesIndex != -1) {
+            // There is a memory allocation with no number of bytes provided
+            let wordMatch = this.fileBuffer.slice(missingMemoryBytesIndex).split(/ |\n/)[1];
+            this.assignError(missingMemoryBytesIndex + this.fileBuffer.slice(missingMemoryBytesIndex).split(/ |\n/)[0].length + 1, 
+                wordMatch.length, 
+                `'${wordMatch.replace(/\n/g, "")}' Missing argument: Number of bytes to allocate not provided.`);
         }
 
-        let blockStartOperandsCount = (this.fileBuffer.match(/\b(if|do|macro)\b/g) || []).length;
-        let blockEndOperandsCount = (this.fileBuffer.match(/\b(end)\b/g) || []).length;
-        let operands = ["if", "do", "macro"];
+        let missingDefinitionNameIndex = this.fileBuffer.firstWordIndexOf("(memory|macro|proc)", "end");
+        if (missingDefinitionNameIndex != -1) {
+            // There is a block definition with no name
+            let wordMatch = this.fileBuffer.slice(missingDefinitionNameIndex).split(/ |\n/)[1];
+            this.assignError(missingDefinitionNameIndex + this.fileBuffer.slice(missingDefinitionNameIndex).split(/ |\n/)[0].length + 1, 
+                wordMatch.length, 
+                `'${wordMatch.replace(/\n/g, "")}' Missing argument: No block definition name provided.`);
+        }
+
+        let unexpectedTokenInMemoryDefinitionIndex = this.fileBuffer.firstWordIndexOf("(?<=memory.*)(if|else|end|while|do|macro|elif|memory|proc|-|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6).*end(?<!.*\/\/.*)");
+        if (unexpectedTokenInMemoryDefinitionIndex != -1) {
+            // There is a memory definition with forbidden tokens
+            let wordMatch = this.fileBuffer.slice(unexpectedTokenInMemoryDefinitionIndex).split(/ |\n/)[0];
+            this.assignError(unexpectedTokenInMemoryDefinitionIndex, 
+                wordMatch.length, 
+                `'${wordMatch.replace(/\n/g, "")}' Unexpected Token: Token not allowed inside memory definition.`);
+        }
+
+        let blockStartOperandsCount = (this.fileBuffer.match(/(?<=\s|^)(?<!(\/\/|").*)(if|while|macro|proc|memory)\b/g) || []).length;
+        let blockEndOperandsCount = (this.fileBuffer.match(/(?<=\s|^)(?<!(\/\/|").*)(end)\b/g) || []).length;
+        let operands = ["if", "while", "macro", "proc", "memory"];
         if (blockStartOperandsCount > blockEndOperandsCount) {
             // There are more block starting operands than ending operands
             let index, op;
@@ -116,8 +134,8 @@ String.prototype.lineCol2Index = function (line, col) {
 String.prototype.lastWordIndexOf = function (str) {
     return ((this.match(new RegExp(`(?:[\\W\\w]{2,})(?<=^|\\s)(?=${str}\\b)`, 'g')) || [0])[0].length + 1 || 0) - 1;
 }
-String.prototype.firstWordIndexOf = function (str) {
-    return (this.length - (this.match(new RegExp(`(?<=^|\\s)(?=${str}[\\s|\\$|\\b])(?:[\\W\\w]{2,})`, 'g')) || [0])[0].length + 1 || 0) - 1;
+String.prototype.firstWordIndexOf = function (str, to = "") {
+    return (this.length - (this.match(new RegExp(`(?<!(\/\/|").*)(?<=^|\\s)(?=${str}(?:\\s|$))(?:\\S*\\W*(${to}))(?:[\\W\\w]*)`, 'g')) || [0])[0].length + 1 || 0) - 1;
 }
 function nthIndex(str, pat, n){
     var L = str.length, i = -1;
