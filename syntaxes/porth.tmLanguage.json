@@ -10,7 +10,7 @@
 			"include": "#keywords"
 		},
 		{
-			"include": "#macros"
+			"include": "#definitions"
 		},
 		{
 			"include": "#placeholders"
@@ -22,7 +22,7 @@
 			"include": "#comments"
 		},
 		{
-			"include": "#functions"
+			"include": "#intrinsics"
 		},
 		{
 			"include": "#constants-and-special-vars"
@@ -33,7 +33,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.porth",
-					"match": "\\b(if|else|end|while|do|macro)\\b"
+					"match": "\\b(if|else|end|while|do|macro|elif|memory|proc)\\b"
 				},
 				{
 					"name": "keyword.declaration.porth",
@@ -41,11 +41,11 @@
 				}
 			]
 		},
-		"macros": {
+		"definitions": {
 			"patterns": [
 				{
 					"name": "support.class.porth",
-					"match": "(?<=macro\\s+)(\\S*)"
+					"match": "(?<=(macro|memory|proc)\\s+)(\\S*)"
 				}
 			]
 		},
@@ -88,15 +88,11 @@
 			"begin": "//",
 			"end": "\n"
 		},
-		"functions": {
+		"intrinsics": {
 			"patterns": [
 				{
 					"name": "variable.name.source.porth",
-					"match": "\\b(divmod|print|shr|shl|bor|band|dup|swap|drop|over|mem|argc|argv|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)\\b"
-				},
-				{
-					"name": "variable.name.source.porth",
-					"match": "(?<=^|\\s)(cast\\(ptr\\)|\\+|\\-|\\*|=|<|>=|<=|!=|\\-|,|\\.64|,64)(?=>$|\\s)"
+					"match": "(?<=^|\\s)(\\+|-|\\*|divmod|print|=|>|<|>=|<=|!=|shr|shl|or|and|not|dup|swap|drop|over|rot|!8|@8|!16|@16|!32|@32|!64|@64|cast\\(ptr\\)|cast\\(int\\)|cast\\(bool\\)|argc|argv|here|syscall0|syscall1|syscall2|syscall3|syscall4|syscall5|syscall6)(?=>$|\\s)"
 				}
 			]
 		},
