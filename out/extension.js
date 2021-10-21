@@ -124,7 +124,7 @@ function activate(context) {
     let simulate = vscode.commands.registerCommand('porth.simulate', () => {prepareCommand(actions.SIMULATE)});
     let compile = vscode.commands.registerCommand('porth.compile', () => {prepareCommand(actions.COMPILE)});
     let run = vscode.commands.registerCommand('porth.run', () => {prepareCommand(actions.RUN)});
-    let test = vscode.commands.registerCommand('porth.test', () => {prepareCommand(actions.TEST)});
+    //let test = vscode.commands.registerCommand('porth.test', () => {prepareCommand(actions.TEST)});
 
     let open_documentation = vscode.commands.registerCommand('porth.OpenExtensionDocumentation', () => {
         search.openURL('https://github.com/timholzhey/porth-language');
@@ -144,7 +144,7 @@ function activate(context) {
         getPorthFile();
     });
 
-    context.subscriptions.push(simulate, compile, run, test, open_documentation);
+    context.subscriptions.push(simulate, compile, run, open_documentation);
 }
 
 exports.activate = activate;
