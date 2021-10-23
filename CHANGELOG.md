@@ -50,3 +50,7 @@
 ## [0.0.9]
 
 - Changed repo url from GitHub to GitLab in README
+
+## [0.0.10]
+
+- Improved grammar, snippets and type checking error annotations regex queries
