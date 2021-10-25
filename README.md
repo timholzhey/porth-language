@@ -16,6 +16,8 @@ Features:
 - Integrated Porth compiler (submodule)
 - Simple semantic type checking
 
+![Example](example.png)
+
 ## Usage
 
 1. Open a `.porth` file inside some folder or workspace.
