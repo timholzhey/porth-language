@@ -144,7 +144,13 @@ function activate(context) {
         getPorthFile();
     });
 
-    context.subscriptions.push(simulate, compile, run, open_documentation);
+    let hoverProvider = vscode.languages.registerHoverProvider('porth', {
+        provideHover(document, position, token) {
+            return diagnosticsManager.provideHover(document, position, token);
+        }
+      });
+
+      context.subscriptions.push(simulate, compile, run, open_documentation, hoverProvider);
 }
 
 exports.activate = activate;

@@ -99,7 +99,8 @@
 					"description": "Automatically run the program after compiling."
 				}
 			}
-		}
+		},
+		"hoverProvider": "true"
 	},
 	"icon": "icon.png",
 	"__metadata": {
