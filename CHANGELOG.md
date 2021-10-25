@@ -54,3 +54,11 @@
 ## [0.0.10]
 
 - Improved grammar, snippets and type checking error annotations regex queries
+
+## [0.0.11]
+
+- Added a hover provider which displays the location of any definition (proc, macro, const) in the current file as well as in the standard library
+- Improved syntax highlighting colors
+- Added standard library definitions to the syntax highlighting
+- Added newest language features: const, offset, reset
+- Added example image to the README
