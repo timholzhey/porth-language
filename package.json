@@ -2,7 +2,7 @@
 	"name": "porth-language",
 	"displayName": "Porth Language",
 	"description": "Porth language support for Visual Studio Code.",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"publisher": "TimHolzhey",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -100,13 +100,14 @@
 				}
 			}
 		},
-		"hoverProvider": "true"
+		"hoverProvider": "true",
+		"definitionProvider": "true"
 	},
 	"icon": "icon.png",
 	"__metadata": {
 		"id": "95b19fba-a66c-48de-9177-8c2d62fe2f14",
 		"publisherId": "308b5072-30b7-44f6-b1f9-ddc67a740cef",
 		"publisherDisplayName": "Tim Holzhey",
-		"installedTimestamp": 1634853722590
+		"installedTimestamp": 1635206002316
 	}
 }
