@@ -15,8 +15,8 @@ class CommandsManager {
 
     /**
      *  @brief  Loads the extension configuration and gets the current porth file
-     *  @param  String: action, vscode.ExtensionContext: context
-     *  @return -
+     *  @param  String action
+     *  @param  vscode.ExtensionContext context
      */
     prepareCommand = (action, context) => {
         console.log(`Preparing command with action [${action}]...`);
@@ -45,8 +45,10 @@ class CommandsManager {
 
     /**
      *  @brief  Assembles the command to be executed depending on the action
-     *  @param  String: action, String: porth_path, Boolean: flag_autorun, Boolean: flag_debug
-     *  @return -
+     *  @param  String action
+     *  @param  String porth_path
+     *  @param  Boolean flag_autorun
+     *  @param  Boolean flag_debug
      */
     buildCommand = (action, porth_path, flag_autorun, flag_debug) => {
         console.log("Building command...");
@@ -90,8 +92,8 @@ class CommandsManager {
 
     /**
      *  @brief  Executes the command in the Terminal
-     *  @param  String: cmd, Array: args
-     *  @return -
+     *  @param  String cmd
+     *  @param  Array args
      */
     executeCommand = (cmd, args) => {
         console.log(`Executing command [${cmd}] with args [${args}]...`);
@@ -110,8 +112,8 @@ class CommandsManager {
 
     /**
      *  @brief  Sets the file path and name of the currently opened file
-     *  @param  String: file_path, String: file_name
-     *  @return -
+     *  @param  String file_path
+     *  @param  String file_name
      */
     setFile = (file_path, file_name) => {
         this.open_file_path = file_path;

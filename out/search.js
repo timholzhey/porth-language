@@ -13,7 +13,7 @@ const vscode = require("vscode");
 
 /**
  *  @brief  Opens an url in the default browser.
- *  @param  String: url
+ *  @param  String url
  *  @return Boolean: true if the browser was opened, false otherwise.
  */
 function openURL(url) {

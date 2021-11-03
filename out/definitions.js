@@ -12,8 +12,6 @@ class DefinitionProvider {
     /**
      *  @brief  Loads metadata (name, file, position) of all scopes (procedures, constants, etc.)
      *          defined inside external files statically.
-     *  @param  -
-     *  @return -
      */
     loadStaticDefinitions = () => {
         static_definitions = [];
@@ -32,7 +30,9 @@ class DefinitionProvider {
 
     /**
      *  @brief  Searches for the hovered word in the definitions table
-     *  @param  vscode.DocumentSelector: document, vscode.Position: position, vscode.CancellationToken: token
+     *  @param  vscode.DocumentSelector document
+     *  @param  vscode.Position position
+     *  @param  vscode.CancellationToken token
      *  @return vscode.ProviderResult<vscode.Location>: Location of the definition to jump to
      *          null: No definition found
      */
@@ -53,7 +53,8 @@ class DefinitionProvider {
 
 /**
  *  @brief  Parses all scope definitions from a file buffer and adds them to the table
- *  @param  String: buffer, String: filePath
+ *  @param  String buffer
+ *  @param  String filePath
  *  @return Array: Array of definition entries found in the buffer
  */
 let parseDefinitionsFromBuffer = (buffer, filePath) => {

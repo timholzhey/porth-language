@@ -9,8 +9,7 @@ const language = require("./language_defines");
 
 /**
  *  @brief  The activate function is called when the extension is activated.
- *  @param  vscode.ExtensionContext: context
- *  @return -
+ *  @param  vscode.ExtensionContext context
  */
 function activate(context) {
     console.log('Porth language extension is now active!');
@@ -20,8 +19,6 @@ function activate(context) {
 
     /**
      *  @brief  Gets the current active porth file opened in the editor.
-     *  @param  -
-     *  @return -
      */
     let getPorthFile = () => {
         let editors = [];

@@ -8,7 +8,9 @@ const language = require("./language_defines");
 class HoverProvider {
     /**
      *  @brief  Searches the hovered word in the list of language keywords and scope definitions
-     *  @param  vscode.DocumentSelector: document, vscode.Position: position, vscode.CancellationToken: token
+     *  @param  vscode.DocumentSelector document
+     *  @param  vscode.Position position
+     *  @param  vscode.CancellationToken token
      *  @return vscode.ProviderResult<vscode.Hover>
      */
     provideHover = (document, position, token) => {
@@ -28,6 +30,11 @@ class HoverProvider {
         for (let i in language.Tokens.keywords) {
             if (language.Tokens.keywords[i] == word) {
                 return new vscode.Hover(`(Porth Keyword) ${language.Tokens.keywords[i]}`);
+            }
+        }
+        for (let i in language.Tokens.datatypes) {
+            if (language.Tokens.datatypes[i] == word) {
+                return new vscode.Hover(`(Porth Datatype) ${language.Tokens.datatypes[i]}`);
             }
         }
     }

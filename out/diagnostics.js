@@ -11,8 +11,10 @@ class DiagnosticsProvider {
 
     /**
      *  @brief  Adds an error diagnostics entry to the array of diagnostics.
-     *  @param  String: buffer, Number: index, Number: len, String: msg
-     *  @return -
+     *  @param  String buffer
+     *  @param  Number index
+     *  @param  Number len
+     *  @param  String msg
      */
     assignError = (buffer, index, len, msg) => {
         let [line, column] = buffer.index2lineCol(index);
@@ -23,8 +25,6 @@ class DiagnosticsProvider {
 
     /**
      *  @brief  Checks the syntax and adds diagnostics entries (e.g. errors) to the diagnostics collection.
-     *  @param  -
-     *  @return -
      */
     provideDiagnostics = () => {
         // TODO: Too many language changes at the moment
