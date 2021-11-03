@@ -518,5 +518,44 @@
             "Intrinsic: Appends a string of this word's location in the file:"
         ],
         "scope": "source.porth"
+    },
+    "max": {
+        "prefix": "max",
+        "body": "max",
+        "description": [
+            "Intrinsic: Appends the maximum of the stack's two topmost values:",
+            "\t👉 max(stack[0], stack[1])"
+        ],
+        "scope": "source.porth"
+    },
+    "int": {
+        "prefix": "int",
+        "body": "int",
+        "description": "Datatype: Integer",
+        "scope": "source.porth"
+    },
+    "ptr": {
+        "prefix": "ptr",
+        "body": "ptr",
+        "description": "Datatype: Pointer",
+        "scope": "source.porth"
+    },
+    "bool": {
+        "prefix": "bool",
+        "body": "bool",
+        "description": "Datatype: Boolean",
+        "scope": "source.porth"
+    },
+    "in": {
+        "prefix": "in",
+        "body": "in",
+        "description": "End of procedure signature",
+        "scope": "source.porth"
+    },
+    "--": {
+        "prefix": "--",
+        "body": "--",
+        "description": "Procedure signature [argument types] -- [return types] seperator",
+        "scope": "source.porth"
     }
 }
