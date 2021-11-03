@@ -73,3 +73,9 @@
 - Removed diagnositcs due to the frequent language changes
 - Updated porth module
 - Updated README
+
+## [0.0.13]
+
+- Updated example code image path
+- Added newest language keywords (datatypes: [int, ptr, bool], in, max)
+- Rewrote function comments
