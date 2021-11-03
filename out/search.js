@@ -11,10 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
 
-function openURL(s) {
+/**
+ *  @brief  Opens an url in the default browser.
+ *  @param  String url
+ *  @return Boolean: true if the browser was opened, false otherwise.
+ */
+function openURL(url) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield vscode.env.openExternal(vscode.Uri.parse(s));
+        yield vscode.env.openExternal(vscode.Uri.parse(url));
         return true;
     });
+
+    return false;
 }
+
 exports.openURL = openURL;

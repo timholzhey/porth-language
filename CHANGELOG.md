@@ -62,3 +62,20 @@
 - Added standard library definitions to the syntax highlighting
 - Added newest language features: const, offset, reset
 - Added example image to the README
+
+## [0.0.12]
+
+- Added newest language keyword: if* to grammar and snippets
+- Updated example image in shown README
+- Added definition provider (Right click: Goto definition)
+- Added brief comments to every larger function
+- Reorganized and split up language server into multiple files
+- Removed diagnositcs due to the frequent language changes
+- Updated porth module
+- Updated README
+
+## [0.0.13]
+
+- Updated example code image path
+- Added newest language keywords (datatypes: [int, ptr, bool], in, max)
+- Rewrote function comments

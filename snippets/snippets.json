@@ -45,16 +45,16 @@
         "description": "Instrinsic: if",
         "scope": "source.porth"
     },
-    "orelse block": {
-        "prefix": "orelse",
-        "body": "orelse ${1:_condition_} if\n\t${2:_body_}",
-        "description": "Branch else if block after if block if (stack[0] == 0)",
+    "if* block": {
+        "prefix": "if*",
+        "body": "if*\n\t${2:_body_}",
+        "description": "Branch else if block after if block (stack[0] == 0)",
         "scope": "source.porth"
     },
-    "orelse": {
-        "prefix": "orelse",
-        "body": "orelse",
-        "description": "Instrinsic: orelse",
+    "if*": {
+        "prefix": "if*",
+        "body": "if*",
+        "description": "Instrinsic: if*",
         "scope": "source.porth"
     },
     "else block": {
@@ -81,18 +81,18 @@
         "description": "Branch if-else-block if (stack[0] == 0)",
         "scope": "source.porth"
     },
-    "if orelse else block": {
+    "if else if* block": {
         "prefix": "if",
         "body": [
             "${1:_condition_} if",
             "\t${2:_body_}",
-            "orelse ${3:_condition_} if",
+            "else ${3:_condition_} if*",
             "\t${4:_body_}",
             "else",
             "\t${5:_body_}",
             "end"
         ],
-        "description": "Branch if-orelse-else-block if (stack[0] == 0)",
+        "description": "Branch if-elseif-else-block if (stack[0] == 0)",
         "scope": "source.porth"
     },
     "while": {
@@ -120,7 +120,31 @@
     "end": {
         "prefix": "end",
         "body": "end",
-        "description": "Marks the end of a (if, while, macro, memory or proc) block",
+        "description": "Marks the end of a block",
+        "scope": "source.porth"
+    },
+    "assert": {
+        "prefix": "assert",
+        "body": "assert",
+        "description": "Static assert",
+        "scope": "source.porth"
+    },
+    "offset": {
+        "prefix": "offset",
+        "body": "offset",
+        "description": "Increase the memory counter by n bytes",
+        "scope": "source.porth"
+    },
+    "reset": {
+        "prefix": "reset",
+        "body": "reset",
+        "description": "Reset the memory counter and assign the value",
+        "scope": "source.porth"
+    },
+    "const": {
+        "prefix": "const",
+        "body": "const ${1:_name_} ${2:_bytes_} end",
+        "description": "Constant definition: Value gets expanded at compile time",
         "scope": "source.porth"
     },
 
@@ -493,6 +517,45 @@
         "description": [
             "Intrinsic: Appends a string of this word's location in the file:"
         ],
+        "scope": "source.porth"
+    },
+    "max": {
+        "prefix": "max",
+        "body": "max",
+        "description": [
+            "Intrinsic: Appends the maximum of the stack's two topmost values:",
+            "\t👉 max(stack[0], stack[1])"
+        ],
+        "scope": "source.porth"
+    },
+    "int": {
+        "prefix": "int",
+        "body": "int",
+        "description": "Datatype: Integer",
+        "scope": "source.porth"
+    },
+    "ptr": {
+        "prefix": "ptr",
+        "body": "ptr",
+        "description": "Datatype: Pointer",
+        "scope": "source.porth"
+    },
+    "bool": {
+        "prefix": "bool",
+        "body": "bool",
+        "description": "Datatype: Boolean",
+        "scope": "source.porth"
+    },
+    "in": {
+        "prefix": "in",
+        "body": "in",
+        "description": "End of procedure signature",
+        "scope": "source.porth"
+    },
+    "--": {
+        "prefix": "--",
+        "body": "--",
+        "description": "Procedure signature [argument types] -- [return types] seperator",
         "scope": "source.porth"
     }
 }

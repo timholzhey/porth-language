@@ -6,32 +6,31 @@ GitHub repository: [Porth language extension for VSCode](https://github.com/timh
 
 This is a Visual Studio Code extension created by Tim Holzhey to add Porth language support.
 
-[Porth](https://gitlab.com/tsoding/porth) is an imperative, stack-based programming language similar to Forth.
+[Porth](https://gitlab.com/tsoding/porth) is an imperative, stack-based programming language.
 Porth is open-source and is currently being developed by [Alexey Kutepov](https://github.com/rexim) aka [Tsoding](https://www.youtube.com/c/Tsoding).
 
 Features:
 - Syntax highlighting (Grammar set)
-- Code snippets (Intrinsics and useful code blocks)
+- Code snippets (Intrinsics and code blocks)
 - Simulate, compile and run commands
 - Integrated Porth compiler (submodule)
-- Simple semantic type checking
+- Jump to definition
 
-![Example](example.png)
+![Example](example_code.png)
 
 ## Usage
 
-1. Open a `.porth` file inside some folder or workspace.
+1. Open a `.porth` file
 2. Open the Command Pallet (`CTRL+SHIFT+P` for Windows/Linux or `CMD+SHIFT+P` on Mac) and enter one of the supported commands:
     - Porth: Simulate program
     - Porth: Compile program
     - Porth: Run program
-    - Porth: Open Extension Documentation
 
 Make sure you have all required commands (python3, nasm, ld) added to `$PATH`.
 
 ## Settings
 
-- `porth.path`: Path to the porth compiler and standard libraries (default: integrated)
+- `porth.path`: Path to the porth compiler (default: builtin)
 - `porth.debug`: Compiler debug flag (default: off)
 - `porth.auto-run`: Auto run the program after compiling (default: on)
 
@@ -39,10 +38,10 @@ Make sure you have all required commands (python3, nasm, ld) added to `$PATH`.
 
 Future features:
 
-- Test and type check program
-- Expand semantic error checking
-- Dynamic language includes
-- Extended standard libraries
+- Test programs
+- Syntax error diagnostics
+- Context-based autocomplete suggestions
+- Parse references from all included files
 
 ## Requirements
 
