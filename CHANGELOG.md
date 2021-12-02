@@ -79,3 +79,7 @@
 - Updated example code image path
 - Added newest language keywords (datatypes: [int, ptr, bool], in, max)
 - Rewrote function comments
+
+## [0.0.14]
+
+- Updated porth submodule (Selfhosting)
