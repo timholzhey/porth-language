@@ -83,3 +83,10 @@
 ## [0.0.14]
 
 - Updated porth submodule (Selfhosting)
+
+## [0.0.15]
+
+- Added "inline" keyword to grammar and snippets
+- Removed simulation command from README, extension config and extension JS
+- Updated porth submodule
+- Added TODOS with multiple Os to grammar

@@ -37,9 +37,9 @@ function activate(context) {
         }
     }
 
-    let simulate = vscode.commands.registerCommand('porth.simulate', () => {
-        commandsManager.prepareCommand(language.CMD.SIMULATE, context);
-    });
+    // let simulate = vscode.commands.registerCommand('porth.simulate', () => {
+    //     commandsManager.prepareCommand(language.CMD.SIMULATE, context);
+    // });
     let compile = vscode.commands.registerCommand('porth.compile', () => {
         commandsManager.prepareCommand(language.CMD.COMPILE, context);
     });
@@ -75,7 +75,7 @@ function activate(context) {
         }
     });
 
-    context.subscriptions.push(simulate, compile, run, open_documentation, hoverProvider, definitionProvider);
+    context.subscriptions.push(compile, run, open_documentation, hoverProvider, definitionProvider);
 }
 
 exports.activate = activate;

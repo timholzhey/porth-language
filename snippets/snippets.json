@@ -20,7 +20,13 @@
     "proc": {
         "prefix": "proc",
         "body": "proc ${1:_name_}\n\t${2:_body_}\nend",
-        "description": "Procedure definition: Code block to jump to when called",
+        "description": "Procedure definition: Code block that gets executed when called",
+        "scope": "source.porth"
+    },
+    "inline": {
+        "prefix": "inline",
+        "body": "inline proc ${1:_name_}\n\t${2:_body_}\nend",
+        "description": "Inline procedure definition: Code block that gets jumped to when called",
         "scope": "source.porth"
     },
     "memory": {

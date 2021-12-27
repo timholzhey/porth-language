@@ -40,7 +40,11 @@
 				},
 				{
 					"name": "invalid.illegal",
-					"match": "(?<=^|\\s)(memory|const)\\s+\\S*(\\s+|$)end(?:\n|\\s)"
+					"match": "(?<=^|\\s)(memory|cons)\\s+\\S*(\\s+|$)end(?:\n|\\s)"
+				},
+				{
+					"name": "invalid.illegal",
+					"match": "(?<=^|\\s)(inline)\\s+(?!proc(\\s|$))"
 				}
 			]
 		},
@@ -48,7 +52,7 @@
 			"patterns": [
 				{
 					"name": "variable.other.enummember",
-					"match": "(?<=\\s|^)(macro|memory|proc|const|in)(?:\\s|$)"
+					"match": "(?<=\\s|^)(macro|memory|proc|const|in|inline)(?:\\s|$)"
 				},
 				{
 					"name": "keyword.declaration.porth", 
@@ -106,11 +110,11 @@
 			"patterns": [
 				{
 					"name": "constant.other.character-class.regexp",
-					"match": "(?<=//\\s*)(TODO|FIXME).*"
+					"match": "(?<=//\\s*)(TODO(O*)|FIXME).*"
 				},
 				{
 					"name": "comment.line.double-slash.porth",
-					"match": "(//(?!\\s?(TODO|FIXME)(\\s|:|$)).*|//\\s*)"
+					"match": "(//(?!\\s?(TODO(O*)|FIXME)(\\s|:|$)).*|//\\s*)"
 				}
 			]
 		},

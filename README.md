@@ -12,7 +12,7 @@ Porth is open-source and is currently being developed by [Alexey Kutepov](https:
 Features:
 - Syntax highlighting (Grammar set)
 - Code snippets (Intrinsics and code blocks)
-- Simulate, compile and run commands
+- Compile and run commands
 - Integrated Porth compiler (submodule)
 - Jump to definition
 
@@ -22,7 +22,6 @@ Features:
 
 1. Open a `.porth` file
 2. Open the Command Pallet (`CTRL+SHIFT+P` for Windows/Linux or `CMD+SHIFT+P` on Mac) and enter one of the supported commands:
-    - Porth: Simulate program
     - Porth: Compile program
     - Porth: Run program
 
@@ -45,11 +44,7 @@ Future features:
 
 ## Requirements
 
-### Simulation only (all platforms):
-
-- Python 3
-
-### Unix x86 compiling
+### Unix x86 compiling (Linux)
 
 - Python 3
 - Netwide Assembler ([NASM](https://www.nasm.us)) x86

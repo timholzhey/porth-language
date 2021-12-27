@@ -29,7 +29,7 @@ class CommandsManager {
         let porth_path = porth_path_conf != "_builtin_" ? porth_path_conf : path.join(context.extensionPath, "/porth");
 
         if (this.open_file_name == null || this.open_file_path == null) {
-            vscode.window.showErrorMessage("[Porth]: Please open a .porth file");
+            vscode.window.showErrorMessage("[Porth]: Please open a .porth file first");
             console.log("Couldn't select a visible editor containing a .porth file");
             return;
         } else {
@@ -55,7 +55,7 @@ class CommandsManager {
         let cmd = "";
         let args = [];
         switch (action) {
-            case language.CMD.SIMULATE:
+            // case language.CMD.SIMULATE:
             case language.CMD.COMPILE:
                 cmd = `python3`;
                 args = [`${path.join(porth_path, "/porth.py")}`, `-I`, `${porth_path}/std`];
