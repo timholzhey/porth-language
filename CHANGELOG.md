@@ -90,3 +90,10 @@
 - Removed simulation command from README, extension config and extension JS
 - Updated porth submodule
 - Added TODOS with multiple Os to grammar
+
+## [0.0.18]
+
+- Added `Bootstrap` command
+- Added keywords `addr`, `addr-of`, `call-like`
+- Changed default python compiler to porth compiler
+- Updated porth module

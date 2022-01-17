@@ -12,9 +12,9 @@ Porth is open-source and is currently being developed by [Alexey Kutepov](https:
 Features:
 - Syntax highlighting (Grammar set)
 - Code snippets (Intrinsics and code blocks)
-- Compile and run commands
+- Bootstrap, compile and run commands
 - Integrated Porth compiler (submodule)
-- Jump to definition
+- Jump to definition (`CTRL+LEFTCLICK`)
 
 ![Example](example_code.png)
 
@@ -22,6 +22,7 @@ Features:
 
 1. Open a `.porth` file
 2. Open the Command Pallet (`CTRL+SHIFT+P` for Windows/Linux or `CMD+SHIFT+P` on Mac) and enter one of the supported commands:
+    - Porth: Bootstrap compiler
     - Porth: Compile program
     - Porth: Run program
 
@@ -39,20 +40,19 @@ Future features:
 
 - Test programs
 - Syntax error diagnostics
-- Context-based autocomplete suggestions
-- Parse references from all included files
+- Autocomplete suggestions
+- Parse definitions from all included files, not just stdlib
+- Proper bootstrapping
 
 ## Requirements
 
 ### Unix x86 compiling (Linux)
 
-- Python 3
-- Netwide Assembler ([NASM](https://www.nasm.us)) x86
+- Netwide Assembler ([NASM](https://www.nasm.us)) x86 (or fasm)
 - GNU linker
 
-### Windows 10 x86 compiling
+### Windows 10 (WSL) x86 compiling
 
-- Python 3
-- Install the Windows Subsystem for Linux (WSL) with: `wsl --install` to use the integrated GNU linker
-- Download and install the latest version of [NASM](https://www.nasm.us) for `win64`
+- Windows Subsystem for Linux (WSL), install with: `wsl --install`
+- Netwide Assembler [NASM](https://www.nasm.us) for `win64`
 - Add NASM to `$PATH` (default: `C:\Users\%user%\AppData\Local\bin\NASM`) and restart

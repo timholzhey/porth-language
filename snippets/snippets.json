@@ -563,5 +563,23 @@
         "body": "--",
         "description": "Procedure signature [argument types] -- [return types] seperator",
         "scope": "source.porth"
+    },
+    "addr": {
+        "prefix": "addr",
+        "body": "addr",
+        "description": "Datatype: Procedure address",
+        "scope": "source.porth"
+    },
+    "addr-of": {
+        "prefix": "addr-of",
+        "body": "addr-of",
+        "description": "Returns the address of a procedure: addr [proc]",
+        "scope": "source.porth"
+    },
+    "call-like": {
+        "prefix": "call-like",
+        "body": "call-like",
+        "description": "Calls procedure at address with signature: [addr] call-like [proc-sig]",
+        "scope": "source.porth"
     }
 }

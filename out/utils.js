@@ -73,3 +73,10 @@ String.prototype.escapeRegExp = function () {
 Array.prototype.escapeRegExp = function () {
     return this.map(x => x.escapeRegExp());
 }
+
+/**
+ * @brief  Converts a windows file path to a wsl unix path.
+ */
+String.prototype.winToWslPath = function () {
+    return this.replaceAll(/\\/g, '/').replace(/(^)/, '/mnt/$1').replace(":", "/");
+}
