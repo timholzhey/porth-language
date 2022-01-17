@@ -56,7 +56,7 @@
 				},
 				{
 					"name": "keyword.declaration.porth", 
-					"match": "(?<=\\s|^)(include|assert|offset|reset|int|ptr|bool|--)(?:\\s|$)"
+					"match": "(?<=\\s|^)(include|assert|offset|addr-of|call-like|reset|int|ptr|bool|addr|--)(?:\\s|$)"
 				},
 				{
 					"name": "keyword.control.porth",
