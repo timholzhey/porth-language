@@ -97,3 +97,10 @@
 - Added keywords `addr`, `addr-of`, `call-like`
 - Changed default python compiler to porth compiler
 - Updated porth module
+
+
+## [0.0.19]
+
+- Added keywords `let` and `peek`
+- Changed bootstrapping from nasm to fasm
+- Updated porth module

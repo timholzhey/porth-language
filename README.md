@@ -46,13 +46,14 @@ Future features:
 
 ## Requirements
 
-### Unix x86 compiling (Linux)
+### Linux x86 compiling
 
-- Netwide Assembler ([NASM](https://www.nasm.us)) x86 (or fasm)
-- GNU linker
+- flat assembler ([FASM](https://flatassembler.net/download.php)) for Linux
 
 ### Windows 10 (WSL) x86 compiling
 
 - Windows Subsystem for Linux (WSL), install with: `wsl --install`
-- Netwide Assembler [NASM](https://www.nasm.us) for `win64`
-- Add NASM to `$PATH` (default: `C:\Users\%user%\AppData\Local\bin\NASM`) and restart
+- Download flat assembler ([FASM](https://flatassembler.net/download.php)) for Linux
+- Unzip and move the fasm folder to a reasonable location
+- Remove file `fasm` and rename `fasm.x64` to `fasm`
+- Add FASM to `$PATH` and restart

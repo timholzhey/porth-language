@@ -20,6 +20,11 @@ class CommandsManager {
      *  @param  vscode.ExtensionContext context
      */
     prepareCommand = (action, context) => {
+        if (process.platform === "darwin") {
+            vscode.window.showErrorMessage("[Porth]: Sorry, this extension is not supported on MacOS yet!");
+            return;
+        }
+
         console.log(`Preparing command with action [${action}]...`);
         if (action == language.CMD.TEST) {
             vscode.window.showErrorMessage("[Porth]: Not implemented yet :(");
@@ -72,7 +77,6 @@ class CommandsManager {
                 if (isWin) {
                     cmd = `cd ${porth_path} && wsl`;
                     args = [`${path.posix.join(porth_path.winToWslPath(), "/porth")}`];
-                    // if (flag_debug) args.push("-debug");
                     args.push(`${action}`);
                     if (flag_autorun) args.push("-r");
                     args.push(`${this.open_file_path.winToWslPath()}`);
@@ -80,33 +84,37 @@ class CommandsManager {
                 } else {
                     cmd = `cd ${porth_path} && ${path.posix.join(porth_path, "/porth")}`;
                     args = [];
-                    // if (flag_debug) args.push("-debug");
                     args.push(`${action}`);
                     if (flag_autorun) args.push("-r");
                     args.push(`${this.open_file_path}`);
                     this.executeCommand(cmd, args);
                 }
                 break;
+
             case language.CMD.BOOTSTRAP:
-                cmd = "nasm";
-                args = [`-felf64`, `${path.posix.join(porth_path, "/bootstrap/porth-linux-x86_64.nasm")}`, `-o`, `${path.posix.join(porth_path, "/porth.o")}`];
-                this.executeCommand(cmd, args);
                 if (isWin) {
+                    cmd = "wsl";
+                    args = [`fasm`, `-m`, `524288`, `${path.posix.join(porth_path.winToWslPath(), "/bootstrap/porth-linux-x86_64.fasm")}`];
+                    this.executeCommand(cmd, args);
                     setTimeout(() => {
                         cmd = "wsl";
-                        args = [`ld`, `-o`, `${path.posix.join(porth_path.winToWslPath(), "/porth")}`, `${path.posix.join(porth_path.winToWslPath(), "/porth.o")}`];
-                        args.push(...[`&&`, `cd`, `${porth_path}`, `&&`, `wsl`, `${path.posix.join(porth_path.winToWslPath(), "/porth")}`, `com`, `${path.posix.join(porth_path.winToWslPath(), "/porth.porth")}`]);
+                        args = [`mv`, `${path.posix.join(porth_path.winToWslPath(), "/bootstrap/porth-linux-x86_64")}`, `${path.posix.join(porth_path.winToWslPath(), "/porth")}`];
+                        args.push(...[`&&`, `cd`, `${porth_path}`, `&&`, `wsl`, `chmod`, `+x`, `${path.posix.join(porth_path.winToWslPath(), "/porth")}`, `&&`, `wsl`, `${path.posix.join(porth_path.winToWslPath(), "/porth")}`, `com`, `${path.posix.join(porth_path.winToWslPath(), "/porth.porth")}`]);
                         this.executeCommand(cmd, args);
                     }, 1000);
                 } else {
+                    cmd = "fasm";
+                    args = [`-m`, `524288`, `${path.posix.join(porth_path, "/bootstrap/porth-linux-x86_64.fasm")}`];
+                    this.executeCommand(cmd, args);
                     setTimeout(() => {
-                        cmd = "ld";
-                        args = [`-o`, `${path.posix.join(porth_path, "/porth")}`, `${path.posix.join(porth_path, "/porth.o")}`];
-                        args.push(...[`${path.posix.join(porth_path, "/porth")}`, `com`, `${path.posix.join(porth_path, "/porth.porth")}`]);
+                        cmd = "mv";
+                        args = [`${path.posix.join(porth_path, "/bootstrap/porth-linux-x86_64")}`, `${path.posix.join(porth_path, "/porth")}`];
+                        args.push(...[`&&`, `cd`, `${porth_path}`, `&&`, `chmod`, `+x`, `${path.posix.join(porth_path, "/porth")}`, `&&`, `${path.posix.join(porth_path, "/porth")}`, `com`, `${path.posix.join(porth_path, "/porth.porth")}`]);
                         this.executeCommand(cmd, args);
                     }, 1000);
                 }
                 break;
+
             case language.CMD.RUN:
                 let basepath = this.open_file_path.split(".porth")[0];
                 fs.stat(basepath, (err, stats) => {
@@ -116,7 +124,7 @@ class CommandsManager {
                         return;
                     }
                     else if (err) {
-                        vscode.window.showErrorMessage('[Porth]: Error while checking if output file exists: ' + err);
+                        vscode.window.showErrorMessage('[Porth]: Error while checking if executable exists: ' + err);
                         return;
                     } else {
                         if (isWin) {
@@ -130,6 +138,11 @@ class CommandsManager {
                         return this.executeCommand(cmd, args);
                     }
                 });
+            break;
+
+            default:
+                // Unreachable
+                break;
         }
     }
 

@@ -581,5 +581,17 @@
         "body": "call-like",
         "description": "Calls procedure at address with signature: [addr] call-like [proc-sig]",
         "scope": "source.porth"
+    },
+    "let": {
+        "prefix": "let",
+        "body": "let",
+        "description": "Bind names to values on the stack and drop them: let [name1] [name2] ... [nameN] in [body] end",
+        "scope": "source.porth"
+    },
+    "peek": {
+        "prefix": "peek",
+        "body": "peek",
+        "description": "Bind names to values on the stack but not drop them: peek [name1] [name2] ... [nameN] in [body] end",
+        "scope": "source.porth"
     }
 }
