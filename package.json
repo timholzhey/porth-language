@@ -2,7 +2,7 @@
 	"name": "porth-language",
 	"displayName": "Porth Language",
 	"description": "Porth language support for Visual Studio Code.",
-	"version": "0.0.19",
+	"version": "0.0.20",
 	"publisher": "TimHolzhey",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -30,7 +30,8 @@
 		"onCommand:porth.compile",
 		"onCommand:porth.bootstrap",
 		"onCommand:porth.run",
-		"onCommand:porth.OpenExtensionDocumentation",
+		"onCommand:porth.openExamples",
+		"onCommand:porth.openExtensionDocumentation",
 		"onLanguage:porth"
 	],
 	"main": "./out/extension",
@@ -49,7 +50,11 @@
 				"title": "Porth: Run program"
 			},
 			{
-				"command": "porth.OpenExtensionDocumentation",
+				"command": "porth.openExamples",
+				"title": "Porth: Open examples folder"
+			},
+			{
+				"command": "porth.openExtensionDocumentation",
 				"title": "Porth: Open Extension Documentation"
 			}
 		],

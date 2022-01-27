@@ -12,6 +12,7 @@ class CommandsManager {
     constructor() {
         this.open_file_path = null;
         this.open_file_name = null;
+        this.chmod_compiler = true;
     }
 
     /**
@@ -33,6 +34,13 @@ class CommandsManager {
 
         let porth_path_conf = extension_config.get('porth.path');
         let porth_path = porth_path_conf != "_builtin_" ? porth_path_conf : path.join(context.extensionPath, "/porth");
+
+        if (action == language.CMD.OPEN_EXAMPLES) {
+            let examples_folder = path.join(porth_path, "/examples");
+            console.log(`Opening examples folder ${examples_folder}...`);
+            vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(examples_folder), true);
+            return;
+        }
 
         if ((this.open_file_name == null || this.open_file_path == null) && action != language.CMD.BOOTSTRAP) {
             vscode.window.showErrorMessage("[Porth]: Please open a .porth file first");
@@ -82,8 +90,12 @@ class CommandsManager {
                     args.push(`${this.open_file_path.winToWslPath()}`);
                     this.executeCommand(cmd, args);
                 } else {
-                    cmd = `cd ${porth_path} && ${path.posix.join(porth_path, "/porth")}`;
-                    args = [];
+                    cmd = "";
+                    if (this.chmod_compiler) {
+                        this.chmod_compiler = false;
+                        cmd = `chmod +x ${path.join(porth_path, "/porth")} &&`;
+                    }
+                    args = [`cd`, `${porth_path}`, `&&`, `${path.posix.join(porth_path, "/porth")}`];
                     args.push(`${action}`);
                     if (flag_autorun) args.push("-r");
                     args.push(`${this.open_file_path}`);
@@ -116,7 +128,7 @@ class CommandsManager {
                 break;
 
             case language.CMD.RUN:
-                let basepath = this.open_file_path.split(".porth")[0];
+                let basepath = this.open_file_path.substring(0, this.open_file_path.lastIndexOf(".porth"));
                 fs.stat(basepath, (err, stats) => {
                     if (err && err.code === 'ENOENT') {
                         console.log(`${basepath} does not exist.`);
@@ -153,7 +165,6 @@ class CommandsManager {
      */
     executeCommand = (cmd, args) => {
         console.log(`Executing command [${cmd}] with args [${args}]...`);
-        if (cmd == "") return;
         let terminal;
         if (vscode.window.activeTerminal != undefined && vscode.window.activeTerminal.name == "Porth") {
             terminal = vscode.window.activeTerminal;

@@ -15,6 +15,7 @@ const CMD = {
     BOOTSTRAP: "bootstrap",
     COMPILE: "com",
     RUN: "run",
+    OPEN_EXAMPLES: "openExamples",
 };
 
 module.exports = {

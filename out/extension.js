@@ -20,7 +20,7 @@ function activate(context) {
     /**
      *  @brief  Gets the current active porth file opened in the editor.
      */
-    let getPorthFile = () => {
+    let getActivePorthFile = () => {
         let editors = [];
         if (vscode.window.activeTextEditor != undefined) {
             editors.push(vscode.window.activeTextEditor);
@@ -38,13 +38,18 @@ function activate(context) {
     }
 
     let compile = vscode.commands.registerCommand('porth.compile', () => {
+        getActivePorthFile();
         commandsManager.prepareCommand(language.CMD.COMPILE, context);
     });
     let bootstrap = vscode.commands.registerCommand('porth.bootstrap', () => {
         commandsManager.prepareCommand(language.CMD.BOOTSTRAP, context);
     });
     let run = vscode.commands.registerCommand('porth.run', () => {
+        getActivePorthFile();
         commandsManager.prepareCommand(language.CMD.RUN, context);
+    });
+    let open_examples = vscode.commands.registerCommand('porth.openExamples', () => {
+        commandsManager.prepareCommand(language.CMD.OPEN_EXAMPLES, context);
     });
     let open_documentation = vscode.commands.registerCommand('porth.OpenExtensionDocumentation', () => {
         search.openURL('https://github.com/timholzhey/porth-language');
@@ -52,15 +57,6 @@ function activate(context) {
     
     vscode.workspace.onDidChangeTextDocument((event) => {
         languageServer.onDidChangeTextDocument(event);
-    });
-    vscode.window.onDidChangeVisibleTextEditors(() => {
-        getPorthFile();
-    });
-    vscode.workspace.onDidCloseTextDocument((event) => {
-        getPorthFile();
-    });
-    vscode.workspace.onDidOpenTextDocument((event) => {
-        getPorthFile();
     });
 
     let hoverProvider = vscode.languages.registerHoverProvider('porth', {
@@ -75,7 +71,7 @@ function activate(context) {
         }
     });
 
-    context.subscriptions.push(compile, bootstrap, run, open_documentation, hoverProvider, definitionProvider);
+    context.subscriptions.push(compile, bootstrap, run, open_examples, open_documentation, hoverProvider, definitionProvider);
 }
 
 exports.activate = activate;

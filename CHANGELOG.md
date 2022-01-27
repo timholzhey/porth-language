@@ -104,3 +104,9 @@
 - Added keywords `let` and `peek`
 - Changed bootstrapping from nasm to fasm
 - Updated porth module
+
+## [0.0.20]
+
+- Added command `Open examples folder`
+- Fixed file permission and file path issue on Linux
+- Fixed active porth file not being detected
