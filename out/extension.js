@@ -28,7 +28,7 @@ function activate(context) {
         editors = editors.concat(vscode.window.visibleTextEditors);
         for (let editor of editors) {
             if (editor.document.uri.fsPath.split(".").pop() == "porth") {
-                commandsManager.setFile(editor.document.uri.fsPath, editor.document.uri.fsPath.split("\\").pop());
+                commandsManager.setFile(editor.document.uri.toString().replace("file://", ""), editor.document.uri.fsPath.split("/").pop().split("\\").pop());
                 languageServer.setFile(editor.document.uri, editor.document.uri.fsPath);
                 languageServer.init();
                 console.log(`Updated current porth file to ${editor.document.uri.fsPath}`);

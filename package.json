@@ -2,7 +2,7 @@
 	"name": "porth-language",
 	"displayName": "Porth Language",
 	"description": "Porth language support for Visual Studio Code.",
-	"version": "0.0.20",
+	"version": "0.0.21",
 	"publisher": "TimHolzhey",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -102,6 +102,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Automatically run the program after compiling."
+				},
+				"fasm.path": {
+					"type": "string",
+					"default": "_builtin_",
+					"description": "Path to FASM. Leave default if you want to use the built-in fasm compiler."
 				}
 			}
 		},

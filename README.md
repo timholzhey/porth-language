@@ -31,9 +31,10 @@ Make sure you have all required commands (python3, nasm, ld) added to `$PATH`.
 
 ## Settings
 
-- `porth.path`: Path to the porth compiler (default: builtin)
+- `porth.path`: Path to the porth compiler (default: `_builtin_`)
 - `porth.debug`: Compiler debug flag (default: off)
 - `porth.auto-run`: Auto run the program after compiling (default: on)
+- `fasm.path`: Path to the fasm compiler (default: `_builtin_`)
 
 ## Work in progress
 
@@ -57,3 +58,7 @@ Future features:
 - Unzip and move the fasm folder to a reasonable location
 - Remove file `fasm` and rename `fasm.x64` to `fasm`
 - Add FASM to `$PATH` and restart
+
+### macOS compiling
+
+- Docker is required to compile for macOS, fasm is bundled

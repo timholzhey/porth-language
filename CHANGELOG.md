@@ -110,3 +110,7 @@
 - Added command `Open examples folder`
 - Fixed file permission and file path issue on Linux
 - Fixed active porth file not being detected
+
+## [0.0.21]
+
+- Added support for compiling on MacOS with Docker
